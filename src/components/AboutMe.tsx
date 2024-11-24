@@ -11,10 +11,12 @@ const AboutMe = () => {
     let {heroId = defaultHero} = useParams();
 
     useEffect(() => {
+        setHeroName(characters[heroId].name);
         if(!characters[heroId]){
             heroId = defaultHero;
         }
         const hero = JSON.parse(localStorage.getItem(heroId)!);
+
         if (hero && ((Date.now() - hero.timestamp) < period_month)) {
             setHero(hero.payload);
         } else {
@@ -32,14 +34,12 @@ const AboutMe = () => {
                         eye_color: data.eye_color
                     }
                     setHero(info);
-                    setHeroName(data.name);
-                    localStorage.setItem(heroId, JSON.stringify({
+                        localStorage.setItem(heroId, JSON.stringify({
                         payload: info,
                         timestamp: Date.now()
                     }));
                 })
         }
-
     }, [])
 
     return (
